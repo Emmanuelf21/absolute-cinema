@@ -1,0 +1,38 @@
+.container-header{
+    background: #333;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 125px;
+}
+
+.container-header .flex{
+    width: 80%;
+}
+
+.flex-logo a{
+    width: 300px;
+    text-decoration: none;
+    color: #F0B364;
+}
+
+.search-bar{
+    position: relative;
+    width: 360px;
+}
+
+.search-bar input{
+    width: 360px;
+    height: 46px;
+    border-radius: 20px;
+    padding-left: 10px;
+}
+
+.search-bar button{
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+}
