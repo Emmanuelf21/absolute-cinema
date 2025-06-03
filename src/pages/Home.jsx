@@ -11,7 +11,7 @@ const Home = () => {
   const getPlayingMovies = async (url) => {
     const res = await fetch(url);
     const data = await res.json();
-
+    console.log(data.results)
     setFilmes(data.results);
   };
 

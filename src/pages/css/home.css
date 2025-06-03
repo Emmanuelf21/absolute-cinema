@@ -25,24 +25,37 @@
 .filmes {
     display: flex;
     justify-content: center;
+    margin: auto;
+    flex-wrap: wrap;
+    width: 80%;
     gap: 2rem;
 }
 
 .filme {
     background: #333;
-    padding: 1rem;
-    width: 150px;
+    padding: 0.5rem;
+    width: fit-content;
+    height: fit-content;
     text-align: center;
     border-radius: 10px;
+    transition: 1s all ease;
 }
 
 .banner-filme {
-    background: #444;
-    height: 200px;
-    margin-bottom: 1rem;
+    height: fit-content;
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.filme:hover{
+    background: #f5a623;
+}
+
+.banner-filme>img{
+    width: 200px;
+    height: 300px;
 }
 
 .filme button {

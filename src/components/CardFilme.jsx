@@ -9,8 +9,6 @@ const CardFilme = ({filme}) => {
             
             {/* pega a url da imagem e concatena com o endpoint do poster */}
             <div className="banner-filme"><img src={imageUrl + filme.poster_path} alt="#" /></div>
-            <h2>{filme.title}</h2>
-            <span>120 min</span>
             {/* faz o redirecionamento para os detalhes do filme e passa o id na url */}
             {/* {showLink && <NavLink to={`/filme/${filme.id}`}>Sessões</NavLink>}  */}
     </NavLink>
