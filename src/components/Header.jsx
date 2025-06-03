@@ -20,7 +20,6 @@ const Header = () => {
                 <BtnLogin/>
             </div>
         </div>
-
     </header>
   )
 }

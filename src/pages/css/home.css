@@ -1,0 +1,60 @@
+.banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background: #111 url('banner-pattern.png') repeat;
+    text-align: center;
+}
+
+.banner h2 {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.em-cartaz {
+    padding: 2rem;
+    text-align: center;
+}
+
+.em-cartaz h2 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+.filmes {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.filme {
+    background: #333;
+    padding: 1rem;
+    width: 150px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.banner-filme {
+    background: #444;
+    height: 200px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filme button {
+    background: #f5a623;
+    border: none;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.filme span {
+    font-size: 0.8rem;
+    color: #aaa;
+}

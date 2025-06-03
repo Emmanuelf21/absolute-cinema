@@ -9,6 +9,7 @@ html,
 body {
   width: 100%;
   display: flex;
+  background: #000;
   flex-direction: column;
   justify-content: center;
 }
