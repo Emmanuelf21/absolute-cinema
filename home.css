@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #333;
+  padding:  2rem;
+}
+
+header h1 {
+  color: #f5a623;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-right: auto;
+  margin-left: 550px;
+}
+
+.search-bar input {
+  border: none;
+  padding: 0.5rem;
+  outline: none;
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0.5rem;
+}
+
+.profile-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+
+
+.banner h2 {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.em-cartaz {
+  padding: 2rem;
+  text-align: center;
+  height: 660px;
+}
+
+.em-cartaz h2 {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+.filmes {
+  display: flex;
+  justify-content: center;
+  gap: 12rem;
+}
+
+.filme {
+  background: #333;
+  padding: 2rem;
+  width: 22rem;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.banner-filme {
+  background: #444;
+  height: 400px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filme button {
+  background: #f5a623;
+  border: none;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.filme span {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+footer {
+  background: #333;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  flex: 1;
+}
+
+.footer-left h2 {
+  color: #f5a623;
+  margin-bottom: 1rem;
+}
+
+.social-icons span {
+  margin-right: 1rem;
+  font-size: 1.5rem;
+}
+
+.footer-sections {
+  display: flex;
+  gap: 2rem;
+  flex: 2;
+}
+
+.section h3 {
+  color: #f5a623;
+  margin-bottom: 0.5rem;
+}
+
+.section p {
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
