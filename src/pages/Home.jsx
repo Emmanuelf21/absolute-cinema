@@ -17,7 +17,7 @@ const Home = () => {
       // Listas de nomes (ou use .id se for mais seguro)
       const nomesNovos = filmes.map(f => f.title);
       const nomesDB = filmesDB.map(f => f.nome);
-
+      
       // Inserir novos
       for (const filme of filmes) {
         if (!nomesDB.includes(filme.title)) {
@@ -25,9 +25,10 @@ const Home = () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              nome: filme.title,
-              descricao: filme.overview,
-              classificacao: true
+              Nome_Filme: filme.title,
+              Descricao: filme.overview,
+              Id_tmdb: filme.id,
+              Classificacao: 'Ativo'
             })
           });
         }
@@ -39,7 +40,7 @@ const Home = () => {
           await fetch(`http://localhost:5000/filmes/${filme.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ativo: false })
+            body: JSON.stringify({ Classificacao: 'Inativo' })
           });
         }
       }

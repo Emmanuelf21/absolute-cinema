@@ -24,7 +24,7 @@ const Filme = () => {
     
     if (!filme) return <p>Carregando...</p>;
     return (
-        <div className="filme-card">
+        <div className="filme-card flex">
             <div className="filme-banner">
                 <img
                     src={imageUrl + filme.poster_path}
@@ -33,15 +33,15 @@ const Filme = () => {
             </div>
 
             <div className="filme-info">
-                {/* <h1>{filme.title}</h1> */}
+                <h1>{filme.title}</h1>
 
                 <h2>Sinopse</h2>
-                {/* <p className="synopsis">{filme.overview}</p> */}
+                <p className="synopsis">{filme.overview}</p>
 
                 <h3>Sala 1</h3>
-                {/* <div className="showtimes">
+                <div className="showtimes">
 
-                </div> */}
+                </div>
             </div>
         </div>
     )
