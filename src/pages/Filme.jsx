@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
+
+import './css/filme.css'
 
 const filmesURL = import.meta.env.VITE_API_MOVIE;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -12,13 +14,12 @@ const Filme = () => {
     const getFilme = async (url) => {
         const res = await fetch(url);
         const data = await res.json();
-
+        console.log(data)
         setFilme(data);
     }
 
     useEffect(() => {
         const filmeURL = `${filmesURL}${id}?${apiKey}`;
-        console.log(id)
         getFilme(filmeURL);
     }, [])
     
@@ -32,16 +33,19 @@ const Filme = () => {
                 />
             </div>
 
-            <div className="filme-info">
+            <div className="filme-info flex-column">
                 <h1>{filme.title}</h1>
 
                 <h2>Sinopse</h2>
                 <p className="synopsis">{filme.overview}</p>
 
                 <h3>Sala 1</h3>
-                <div className="showtimes">
-
+                <div className="showtimes flex">
+                    <NavLink to={'/sessao'}>11h00</NavLink>
+                    <NavLink to={'/sessao'}>14h00</NavLink>
+                    <NavLink to={'/sessao'}>17h00</NavLink>
                 </div>
+                <p>Duração: {filme.runtime} min</p>
             </div>
         </div>
     )

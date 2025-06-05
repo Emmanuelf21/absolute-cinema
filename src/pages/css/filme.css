@@ -1,0 +1,60 @@
+.filme-card{
+    background: #333;
+    width: 70%;
+    height: fit-content;
+    padding: 0;
+    margin: 20px auto;
+    gap: 20px;
+}
+
+.filme-banner{
+    height: fit-content;
+    padding: 0;
+}
+.filme-info{
+    margin-top: 100px;
+    gap: 40px;
+}
+
+.filme-info h1{
+    color: #fff;
+    height: fit-content;
+    
+}
+
+.filme-info h2{
+    color: #f5a623;
+    margin-top: 10px;
+}
+
+.filme-info p{
+    width: 500px;
+    color: #fff;
+    font-size: 1.2rem;
+    text-align: justify;
+}
+
+.filme-info h3{
+    color: #f5a623;
+    font-size: 1.5rem;
+}
+
+.showtimes{
+    width: fit-content;
+    gap: 30px;
+}
+
+.showtimes a{
+    text-decoration: none;
+    border: 2px solid #f5a623;
+    border-radius: 8px;
+    padding: 5px 10px;
+    color: #f5a623;
+    font-weight: 600;
+}
+
+.showtimes a:hover{
+    background: #f5a623;
+    color: #000;
+    font-weight: 600;
+}

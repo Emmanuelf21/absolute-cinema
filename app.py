@@ -19,12 +19,16 @@ cursor = conn.cursor()
 # POST - Inserir novo filme
 @app.route('/filmes', methods=['POST'])
 def inserir_filme():
-    data = request.json
+    data = request.json  # Verifique se request.json está pegando os dados corretamente
+    
+    if not data:
+        return jsonify({'error': 'No JSON data provided'}), 400  # Se não houver dados JSON
+
     try:
         cursor.execute("""
             INSERT INTO Filme (Id_tmdb, Nome_Filme, Descricao, Classificacao)
             VALUES (?, ?, ?, ?)
-        """, data.get('Id_tmdb'), data.get('Nome_Filme'), data.get('Descricao'), data.get('Classificacao'))
+        """, (data.get('Id_tmdb'), data.get('Nome_Filme'), data.get('Descricao'), data.get('Classificacao')))
         conn.commit()
         return jsonify({'message': 'Filme inserido com sucesso'}), 201
     except Exception as e:
