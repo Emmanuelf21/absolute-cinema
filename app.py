@@ -34,6 +34,29 @@ def inserir_filme():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    login_input = data.get('login_email')  # pode ser login ou email
+    senha = data.get('senha')
+
+    cursor.execute("""
+        SELECT Cod_Usuario, Nome_Usuario, Login_Usuario, Email_Usuario
+        FROM Usuario
+        WHERE (Login_Usuario = ? OR Email_Usuario = ?) AND Senha_Usuario = ?
+    """, (login_input, login_input, senha))
+    user = cursor.fetchone()
+
+    if user:
+        return jsonify({
+            'Cod_Usuario': user.Cod_Usuario,
+            'Nome_Usuario': user.Nome_Usuario,
+            'Login_Usuario': user.Login_Usuario,
+            'Email_Usuario': user.Email_Usuario
+        }), 200
+    else:
+        return jsonify({'erro': 'Usuário ou senha inválidos'}), 401
+
 # GET - Listar filmes
 @app.route('/filmes', methods=['GET'])
 def listar_filmes():
@@ -70,6 +93,39 @@ def atualizar_classificacao(filme_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/cadastro', methods=['POST'])
+def cadastrar_usuario():
+    data = request.get_json()
+
+    nome = data.get('nome')
+    login = data.get('usuario')
+    email = data.get('email')
+    senha = data.get('senha')  # em produção, hasheie isso!
+    cpf = data.get('cpf')
+    data_nasc = data.get('data_nasc')  # formato esperado: 'DD/MM/YYYY'
+    telefone = data.get('telefone')
+
+    # Verificar se o login ou email já existem
+    cursor.execute("""
+        SELECT 1 FROM Usuario WHERE Login_Usuario = ? OR Email_Usuario = ?
+    """, (login, email))
+    if cursor.fetchone():
+        return jsonify({'erro': 'Usuário ou email já cadastrado'}), 409
+
+    try:
+        # Inserir usuário
+        cursor.execute("""
+            INSERT INTO Usuario 
+            (Nome_Usuario, Login_Usuario, Email_Usuario, Senha_Usuario, CPF, Data_Nascimento, Telefone)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (nome, login, email, senha, cpf, data_nasc, telefone))
+
+        conn.commit()
+        return jsonify({'mensagem': 'Usuário cadastrado com sucesso'}), 201
+
+    except Exception as e:
+        return jsonify({'erro': str(e)}), 500
+    
 # Roda o servidor
 if __name__ == '__main__':
     app.run(debug=True)
