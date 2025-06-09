@@ -10,19 +10,27 @@ const imageUrl = import.meta.env.VITE_IMG;
 const Filme = () => {
     const { id } = useParams();
     const [filme, setFilme] = useState(null);
+    const [filmeDB, setFilmeDB] = useState(null);
+
+    const getFilmeDb = async () => {
+        const res = await fetch(`http://localhost:5000/filme/${id}`)
+        const data = await res.json()
+        setFilmeDB(data);
+    }
 
     const getFilme = async (url) => {
         const res = await fetch(url);
         const data = await res.json();
-        console.log(data)
         setFilme(data);
+        // getFilmeDb();
     }
 
     useEffect(() => {
         const filmeURL = `${filmesURL}${id}?${apiKey}`;
+        getFilmeDb();
         getFilme(filmeURL);
     }, [])
-    
+
     if (!filme) return <p>Carregando...</p>;
     return (
         <div className="filme-card flex">
@@ -39,12 +47,18 @@ const Filme = () => {
                 <h2>Sinopse</h2>
                 <p className="synopsis">{filme.overview}</p>
 
-                <h3>Sala 1</h3>
-                <div className="showtimes flex">
-                    <NavLink to={'/sessao'}>11h00</NavLink>
-                    <NavLink to={'/sessao'}>14h00</NavLink>
-                    <NavLink to={'/sessao'}>17h00</NavLink>
-                </div>
+                {filmeDB && filmeDB.map((sala) => (
+                    <div key={sala.Cod_Sala}>
+                        <h3>Sala {sala.Numero_Sala}</h3>
+                        <div className="showtimes flex">
+                            {sala.Sessoes.map(sessao => (
+                                <NavLink key={sessao.Cod_Sessao} to={`/sessao/${sessao.Cod_Sessao}`}>
+                                    {sessao.Horario.slice(0, 5)} {/* exibe 11:00, 14:00 etc */}
+                                </NavLink>
+                            ))}
+                        </div>
+                    </div>
+                ))}
                 <p>Duração: {filme.runtime} min</p>
             </div>
         </div>

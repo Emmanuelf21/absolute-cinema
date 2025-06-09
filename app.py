@@ -76,22 +76,49 @@ def listar_filmes():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# PATCH - Atualizar classificação (ex: inativar)
-@app.route('/filmes/<int:filme_id>', methods=['PATCH'])
-def atualizar_classificacao(filme_id):
-    data = request.json
-    nova_classificacao = data.get('Classificacao')
-    if nova_classificacao not in ['ativo', 'inativo']:
-        return jsonify({'error': 'Classificacao inválida'}), 400
+@app.route('/filme/<int:id_tmdb>', methods=['GET'])
+def get_sessoes_by_tmdb(id_tmdb):
     try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+
         cursor.execute("""
-            UPDATE Filme SET Classificacao = ?
-            WHERE Cod_Filme = ?
-        """, nova_classificacao, filme_id)
-        conn.commit()
-        return jsonify({'message': 'Filme atualizado com sucesso'})
+            SELECT sa.Cod_Sala, sa.Numero_Sala, se.Cod_Sessao, se.Horario
+            FROM Sessao se
+            INNER JOIN Sala sa ON se.Cod_Sala = sa.Cod_Sala
+            INNER JOIN Filme fi ON se.Cod_Filme = fi.Cod_Filme
+            WHERE fi.Id_tmdb = ?
+            ORDER BY sa.Cod_Sala, se.Horario
+        """, id_tmdb)
+
+        rows = cursor.fetchall()
+
+        if not rows:
+            return jsonify({"erro": "Filme não encontrado"}), 404
+
+        # Agrupar sessões por sala
+        salas_dict = {}
+        for row in rows:
+            cod_sala = row.Cod_Sala
+            if cod_sala not in salas_dict:
+                salas_dict[cod_sala] = {
+                    "Cod_Sala": cod_sala,
+                    "Numero_Sala": row.Numero_Sala,
+                    "Sessoes": []
+                }
+            salas_dict[cod_sala]["Sessoes"].append({
+                "Cod_Sessao": row.Cod_Sessao,
+                "Horario": str(row.Horario)
+            })
+
+        return jsonify(list(salas_dict.values()))
+
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
 
 @app.route('/cadastro', methods=['POST'])
 def cadastrar_usuario():

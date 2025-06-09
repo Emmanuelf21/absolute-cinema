@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 const imageUrl = import.meta.env.VITE_IMG;
 
 const CardFilme = ({filme}) => {
+  
   return (
     <NavLink to={`/filme/${filme.id}`} id={filme.id} className="filme">
             
