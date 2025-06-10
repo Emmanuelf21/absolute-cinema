@@ -160,9 +160,10 @@ def get_cadeiras_sessao(cod_sessao):
         cursor = conn.cursor()
 
         cursor.execute("""
-            SELECT c.Cod_Cadeira, c.Letra, c.Numero, sc.Status_Filme
-            FROM Sessao_Cadeira sc
-            INNER JOIN Cadeira c ON c.Cod_Cadeira = sc.Cod_Cadeira
+            SELECT c.Cod_Cadeira, f.Id_tmdb,c.Fileira, c.Assento, c.Status_Filme
+            FROM Sessao sc
+            INNER JOIN Cadeiras c ON c.Cod_Sala = sc.Cod_Sala
+            INNER JOIN Filme f ON f.Cod_Filme = sc.Cod_Filme
             WHERE sc.Cod_Sessao = ?
         """, cod_sessao)
 
@@ -171,12 +172,45 @@ def get_cadeiras_sessao(cod_sessao):
         for row in results:
             cadeiras.append({
                 "Cod_Cadeira": row.Cod_Cadeira,
-                "Letra": row.Letra,
-                "Numero": row.Numero,
+                "tmdb":row.Id_tmdb,
+                "Fileira": row.Fileira,
+                "Assento": row.Assento,
                 "Status_Filme": row.Status_Filme
             })
 
         return jsonify(cadeiras)
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/sessao/<int:cod_sessao>', methods=['GET'])
+def get_sessao(cod_sessao):
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT sc.Cod_Sessao, sc.Cod_Filme, f.Id_tmdb, sa.Numero_Sala, sc.horario
+            FROM Sessao sc
+            INNER JOIN Filme f ON f.Cod_Filme = sc.Cod_Filme
+            INNER JOIN Sala sa ON sc.Cod_Sala = sa.Cod_Sala
+            WHERE sc.Cod_Sessao = ?
+        """, cod_sessao)
+
+        results = cursor.fetchall()
+        filme = []
+        for row in results:
+            filme.append({
+                "Cod_Sessao": row.Cod_Sessao,
+                "Cod_Filme": row.Cod_Filme,
+                "tmdb":row.Id_tmdb,
+                "sala": row.Numero_Sala,
+                "horario": str(row.horario)
+            })
+
+        return jsonify(filme)
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
     finally:

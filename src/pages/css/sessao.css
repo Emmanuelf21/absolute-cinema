@@ -2,7 +2,8 @@
     display: flex;
     background-color: #111;
     color: #fff;
-    padding: 20px;
+    width: 70%;
+    margin: 30px auto;
   }
   
   .banner {
@@ -11,6 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
   }
   
   .sala-container {
@@ -18,33 +20,46 @@
     padding: 20px;
     background-color: #2c2c2c;
     border-radius: 10px;
+    
   }
   
   .horario {
     background-color: #444;
     padding: 5px 10px;
     border-radius: 10px;
-    display: inline-block;
-    margin-bottom: 10px;
+    width: fit-content;
+    margin: 10px auto;
   }
   
   .grid-cadeiras {
     display: flex;
     flex-direction: column;
+
     gap: 10px;
   }
   
-  .linha {
+  .fileira {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    align-items: center;
+    gap: 30px;
+  }
+  .fileira p{
+    padding: 5px 8px;
+    background: #f5a623;
+    border-radius: 50px;
+  }
+
+  .linha{
+    display: flex;
+    gap: 20px;
   }
   
   .cadeira {
     width: 35px;
     height: 35px;
     border-radius: 8px;
-    background-color: #ffb347;
+    background-color: #f5a623;
     border: 2px solid #000;
     cursor: pointer;
   }
@@ -59,12 +74,14 @@
   }
   
   .tela {
+    margin: auto;
     margin-top: 20px;
     text-align: center;
     background-color: #ccc;
     color: #000;
     padding: 8px;
     border-radius: 5px;
+    width: 60%;
   }
   
   .legenda {
@@ -82,7 +99,7 @@
   }
   
   .legenda-box.disponivel {
-    background-color: #ffb347;
+    background-color: #f5a623;
   }
   
   .legenda-box.ocupada {
@@ -94,12 +111,17 @@
   }
   
   .confirmar {
-    background-color: orange;
+    background-color: #f5a623;
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
   }
   
+  .confirmar:hover{
+    background: transparent;
+    border: 2px solid #f5a623;
+    color: #f5a623;
+  }
