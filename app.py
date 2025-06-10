@@ -152,7 +152,63 @@ def cadastrar_usuario():
 
     except Exception as e:
         return jsonify({'erro': str(e)}), 500
-    
+
+@app.route('/sessao/<int:cod_sessao>/cadeiras', methods=['GET'])
+def get_cadeiras_sessao(cod_sessao):
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT c.Cod_Cadeira, c.Letra, c.Numero, sc.Status_Filme
+            FROM Sessao_Cadeira sc
+            INNER JOIN Cadeira c ON c.Cod_Cadeira = sc.Cod_Cadeira
+            WHERE sc.Cod_Sessao = ?
+        """, cod_sessao)
+
+        results = cursor.fetchall()
+        cadeiras = []
+        for row in results:
+            cadeiras.append({
+                "Cod_Cadeira": row.Cod_Cadeira,
+                "Letra": row.Letra,
+                "Numero": row.Numero,
+                "Status_Filme": row.Status_Filme
+            })
+
+        return jsonify(cadeiras)
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/sessao/<int:cod_sessao>/comprar', methods=['POST'])
+def comprar_cadeiras(cod_sessao):
+    try:
+        cadeiras = request.json.get('cadeiras')
+
+        if not cadeiras:
+            return jsonify({"erro": "Nenhuma cadeira enviada"}), 400
+
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+
+        for cod_cadeira in cadeiras:
+            cursor.execute("""
+                UPDATE Sessao_Cadeira
+                SET Status_Filme = 'ocupada'
+                WHERE Cod_Sessao = ? AND Cod_Cadeira = ?
+            """, cod_sessao, cod_cadeira)
+
+        conn.commit()
+        return jsonify({"mensagem": "Compra confirmada"})
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
+        
 # Roda o servidor
 if __name__ == '__main__':
     app.run(debug=True)

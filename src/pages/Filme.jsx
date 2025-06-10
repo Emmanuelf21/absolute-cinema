@@ -52,7 +52,7 @@ const Filme = () => {
                         <h3>Sala {sala.Numero_Sala}</h3>
                         <div className="showtimes flex">
                             {sala.Sessoes.map(sessao => (
-                                <NavLink key={sessao.Cod_Sessao} to={`/sessao/${sessao.Cod_Sessao}`}>
+                                <NavLink key={sessao.Cod_Sessao} id={sessao.Cod_Sessao} to={`/sessao/${sessao.Cod_Sessao}`}>
                                     {sessao.Horario.slice(0, 5)} {/* exibe 11:00, 14:00 etc */}
                                 </NavLink>
                             ))}
