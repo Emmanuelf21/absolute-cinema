@@ -6,7 +6,7 @@
     margin: 30px auto;
   }
   
-  .banner {
+  .banner-sessao {
     flex: 1;
     background-color: #ccc;
     display: flex;
@@ -18,9 +18,7 @@
   .sala-container {
     flex: 2;
     padding: 20px;
-    background-color: #2c2c2c;
-    border-radius: 10px;
-    
+    background-color: #2c2c2c;    
   }
   
   .horario {

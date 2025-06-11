@@ -49,6 +49,7 @@ const Sessao = () => {
   };
 
   const confirmarCompra = async () => {
+    console.log(selecionadas)
     await fetch(`http://localhost:5000/sessao/${id}/comprar`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -69,10 +70,10 @@ const Sessao = () => {
             .map((c) => (
               <button
                 key={c.Cod_Cadeira}
-                disabled={c.Status_Filme === 'Ocupada'}
+                disabled={c.Status_Filme === 'Ocupado'}
                 onClick={() => toggleSelecionada(c.Cod_Cadeira)}
                 className={`cadeira 
-                ${c.Status_Filme === 'Ocupada' ? 'Ocupada' : 'Disponível'}
+                ${c.Status_Filme === 'Ocupado' ? 'Ocupado' : 'Disponível'}
                 ${selecionadas.includes(c.Cod_Cadeira) ? 'selecionada' : ''}`}
               >
                 {c.Numero}
@@ -88,7 +89,7 @@ const Sessao = () => {
 
   return (
     <div className="sessao-container">
-      <div className="banner">
+      <div className="banner-sessao">
         <img src={imageUrl + filme.poster_path} alt="#" />
       </div>
       <div className="sala-container">

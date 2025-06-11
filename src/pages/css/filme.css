@@ -25,6 +25,7 @@
 .filme-info h2{
     color: #f5a623;
     margin-top: 10px;
+    width: fit-content;
 }
 
 .filme-info p{
