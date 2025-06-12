@@ -25,6 +25,7 @@
 .filme-info h2{
     color: #f5a623;
     margin-top: 10px;
+    width: fit-content;
 }
 
 .filme-info p{
@@ -37,6 +38,7 @@
 .filme-info h3{
     color: #f5a623;
     font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .showtimes{

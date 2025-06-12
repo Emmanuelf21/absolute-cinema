@@ -1,0 +1,26 @@
+
+.container-ingresso img{
+    height: 300px;
+}
+
+.container-ingresso{
+    width: 70%;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    padding-left: 40px;
+    align-items: center;
+    gap: 40px;
+}
+
+.container-ingresso>.flex-column h2{
+    color: #f5a623;
+    width: fit-content;
+    margin-bottom: 30px;
+}
+
+.info-sessao{
+    color: #fff;
+    gap: 20px;
+    justify-content: space-evenly;
+    height: fit-content;
+}

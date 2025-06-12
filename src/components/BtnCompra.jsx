@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie';
 import { NavLink } from 'react-router-dom';
-import { FaUserCircle } from "react-icons/fa";
 
-const BtnLogin = () => {
-
+const BtnCompra = ({confirmarCompra}) => {
     const [usuarioLogado, setUsuarioLogado] = useState(null);
 
     useEffect(() => {
@@ -16,17 +14,17 @@ const BtnLogin = () => {
 
     if (usuarioLogado) {
         return (
-            <NavLink to='/ingressos' className='btn-logado'>
-                <FaUserCircle />
-            </NavLink>
+            <button className="confirmar" onClick={confirmarCompra}>
+          Confirmar
+        </button>
         );
     } else {
         return (
-            <NavLink to='/login' className='btn-logar'>
-                Login/Cadastrar
+            <NavLink to='/login' className='confirmar'>
+                Confirmar
             </NavLink>
         );
     }
 }
 
-export default BtnLogin
+export default BtnCompra

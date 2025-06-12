@@ -1,0 +1,11 @@
+.ingressos-container{
+    gap: 30px;
+    align-items: center;
+    margin: 40px 0px;
+}
+
+.ingressos-container h1{
+    color: #f5a623;
+    width: fit-content;
+}
+

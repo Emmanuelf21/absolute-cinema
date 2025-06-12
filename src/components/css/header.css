@@ -75,3 +75,9 @@
   .user:hover a{
     color: #F0B364;
   }
+
+  .btn-logado{
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+  }

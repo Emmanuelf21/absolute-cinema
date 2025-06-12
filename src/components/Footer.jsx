@@ -1,6 +1,8 @@
 import React from 'react'
 import './css/footer.css'
-
+import { AiFillGoogleCircle } from "react-icons/ai";
+import { IoLogoAppleAppstore } from "react-icons/io5";
+import { FaFacebook } from "react-icons/fa";
 const Footer = () => {
     return (
         <footer>
@@ -8,9 +10,9 @@ const Footer = () => {
                 <div className="footer-left">
                     <h2>Absolute Cinema</h2>
                     <div className="social-icons">
-                        <span>🔗</span>
-                        <span>🖼️</span>
-                        <span>🔗</span>
+                        <span><AiFillGoogleCircle /></span>
+                        <span><IoLogoAppleAppstore /></span>
+                        <span><FaFacebook /></span>
                     </div>
                 </div>
 
