@@ -59,25 +59,15 @@
     padding: 0 10px;
   }
 
-  .user a{
-    text-decoration: none;
-    font-weight: 600;
-    color: #000;
-    height: fit-content;
-    width: fit-content;
-  }
-
   .user:hover{
     border: 2px solid #F0B364;
     background: none;
-  }
-
-  .user:hover a{
-    color: #F0B364;
   }
 
   .btn-logado{
     font-size: 22px;
     display: flex;
     align-items: center;
+    width: 100%;
+    padding: 0;
   }
