@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './css/sessao.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import BtnCompra from '../components/BtnCompra';
 
 const filmesURL = import.meta.env.VITE_API_MOVIE;
 const apiKey = import.meta.env.VITE_API_KEY;
 const imageUrl = import.meta.env.VITE_IMG;
 
 const Sessao = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [cadeiras, setCadeiras] = useState([]);
   const [selecionadas, setSelecionadas] = useState([]);
@@ -49,14 +51,15 @@ const Sessao = () => {
   };
 
   const confirmarCompra = async () => {
-    console.log(selecionadas)
     await fetch(`http://localhost:5000/sessao/${id}/comprar`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ cadeiras: selecionadas }),
+      credentials: 'include',
     });
     alert('Compra confirmada!');
-    window.location.reload();
+    navigate('/')
+    
   };
 
   const renderCadeiras = () => {
@@ -109,9 +112,7 @@ const Sessao = () => {
             <span className="legenda-box disponivel" /> Disponível
           </span>
         </div>
-        <button className="confirmar" onClick={confirmarCompra}>
-          Confirmar
-        </button>
+        <BtnCompra confirmarCompra={confirmarCompra}/>
       </div>
     </div>
   );

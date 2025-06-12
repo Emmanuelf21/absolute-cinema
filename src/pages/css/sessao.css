@@ -62,7 +62,7 @@
     cursor: pointer;
   }
   
-  .cadeira.ocupada {
+  .cadeira.Ocupado {
     background-color: #999;
     cursor: not-allowed;
   }
@@ -116,6 +116,7 @@
     cursor: pointer;
     color: white;
     font-weight: 600;
+    text-decoration: none;
   }
   
   .confirmar:hover{

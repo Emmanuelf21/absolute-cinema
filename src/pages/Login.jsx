@@ -60,6 +60,7 @@ const Login = () => {
             });
             const result = await response.json();
             alert(JSON.stringify(result));
+            window.location.reload();
         } catch (error) {
             alert('Erro ao cadastrar.');
         }

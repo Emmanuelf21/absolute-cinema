@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify
+import json
 from flask_cors import CORS
+import urllib.parse
 import pyodbc
 
 app = Flask(__name__)
-CORS(app)
-
+CORS(app,supports_credentials=True)
 # Conexão com SQL Server (ajuste conforme seu ambiente)
 conn_str = (
     'DRIVER={ODBC Driver 17 for SQL Server};'
@@ -75,6 +76,49 @@ def listar_filmes():
         return jsonify(resultado)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/ingressos/<int:cod_usuario>', methods=['GET'])
+def get_ingresso(cod_usuario):
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT se.Horario, fi.Nome_filme, fi.Id_tmdb, sa.Numero_Sala, ca.Fileira, ca.Assento
+            FROM Ingresso i
+            INNER JOIN Usuario us ON us.Cod_Usuario = i.Cod_Usuario
+            INNER JOIN Cadeiras ca ON ca.Cod_Cadeira = i.Cod_Cadeira
+            INNER JOIN Sessao se ON se.Cod_Sessao = i.Cod_Sessao
+            INNER JOIN Sala sa ON sa.Cod_Sala = se.Cod_Sala
+            INNER JOIN Filme fi ON fi.Cod_Filme = se.Cod_Filme
+            WHERE us.Cod_Usuario = ?
+        """, cod_usuario)
+
+        rows = cursor.fetchall()
+
+        if not rows:
+            return jsonify({"erro": "Filme não encontrado"}), 404
+
+        # Agrupar sessões por sala
+        ingressos = []
+        for row in rows:
+            ingressos.append({
+                'horario': row.Horario.strftime('%H:%M:%S'),  # formatação opcional
+                'nome_filme': row.Nome_filme,
+                'tmdb': row.Id_tmdb,
+                'numero_sala': row.Numero_Sala,
+                'fileira': row.Fileira,
+                'assento': row.Assento
+            })
+
+        return jsonify({'ingressos': ingressos}), 200
+
+    except Exception as e:
+        return jsonify({'erro': str(e)}), 500
+
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.route('/filme/<int:id_tmdb>', methods=['GET'])
 def get_sessoes_by_tmdb(id_tmdb):
@@ -217,31 +261,52 @@ def get_sessao(cod_sessao):
         cursor.close()
         conn.close()
 
-@app.route('/sessao/<int:cod_sessao>/comprar', methods=['POST'])
-def comprar_cadeiras(cod_sessao):
+@app.route('/sessao/<int:id>/comprar', methods=['POST'])
+def comprar_ingressos(id):
+    cadeiras = request.json.get('cadeiras', [])
+    raw_cookie = request.cookies.get('usuario_logado')
+    decoded = urllib.parse.unquote(raw_cookie)
+    usuario = json.loads(decoded)
+    cod_usuario = usuario.get('Cod_Usuario')
+    print(cod_usuario)
+    if not usuario:
+        return jsonify({'error': 'Usuário não autenticado'}), 401
+    if not cadeiras:
+        return jsonify({'error': 'Nenhuma cadeira selecionada'}), 400
+
     try:
-        cadeiras = request.json.get('cadeiras')
-
-        if not cadeiras:
-            return jsonify({"erro": "Nenhuma cadeira enviada"}), 400
-
         conn = pyodbc.connect(conn_str)
         cursor = conn.cursor()
+        
+        # Inicia transação
+        conn.autocommit = False
 
         for cod_cadeira in cadeiras:
+            # 1. Inserir ingresso
             cursor.execute("""
-                UPDATE Sessao_Cadeira
-                SET Status_Filme = 'ocupada'
-                WHERE Cod_Sessao = ? AND Cod_Cadeira = ?
-            """, cod_sessao, cod_cadeira)
+                INSERT INTO Ingresso (Cod_Usuario, Cod_Sessao, Cod_Cadeira)
+                VALUES (?, ?, ?)
+            """, (cod_usuario, id, cod_cadeira))
 
+            # 2. Atualizar status da cadeira
+            cursor.execute("""
+                UPDATE Cadeiras
+                SET Status_Filme = 'Ocupado'
+                WHERE Cod_Cadeira = ?
+            """, (cod_cadeira,))
+
+        # Confirma todas as operações
         conn.commit()
-        return jsonify({"mensagem": "Compra confirmada"})
+        return jsonify({'message': 'Compra realizada com sucesso'}), 201
+
     except Exception as e:
-        return jsonify({"erro": str(e)}), 500
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+
     finally:
         cursor.close()
         conn.close()
+
         
 # Roda o servidor
 if __name__ == '__main__':
