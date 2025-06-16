@@ -2,15 +2,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
-    background: #111 url('banner-pattern.png') repeat;
+    height: 450px;
+    /* background: #111 url('banner-pattern.png') repeat; */
+    background-image: url('../../images/banner2.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
     text-align: center;
+    background-position: 50%;
 }
 
-.banner h2 {
-    color: #fff;
-    font-size: 1.5rem;
-}
+/* .banner img{
+    width: 1440px;
+} */
 
 .em-cartaz {
     padding: 2rem;

@@ -16,6 +16,15 @@
     min-width: 140px;
     padding: 10px 10px 10px 20px;
 }
+.user .btn-logar{
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+}
+
+.user:hover .btn-logar{
+    color: #f5a623;
+}
 
 .btn-ingressos {
     display: block;
@@ -25,8 +34,6 @@
     border-bottom: 1px solid #333;
     transition: 0.5s all ease;
 }
-
-
 
 .btn-sair {
     width: 100%;

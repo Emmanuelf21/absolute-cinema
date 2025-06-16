@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './css/home.css'
 import CardFilme from '../components/CardFilme'
-
+import banner from '../images/banner.jfif'
 const filmesURL = import.meta.env.VITE_API_MOVIE;
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <>
       <section className="banner">
-        <h2>BANNER DE ALGUM FILME EM CARTAZ</h2>
+        {/* <img src={banner} alt="" /> */}
       </section>
 
       <section className="em-cartaz">
