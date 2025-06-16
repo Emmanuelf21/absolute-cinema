@@ -2,11 +2,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 450px;
+    height: 550px;
     /* background: #111 url('banner-pattern.png') repeat; */
     background-image: url('../../images/banner2.png');
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
     text-align: center;
     background-position: 50%;
 }
