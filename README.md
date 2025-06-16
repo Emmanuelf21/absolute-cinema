@@ -1,5 +1,5 @@
 # Projeto Absolute Cinema
-- Site de compra de ingressos com Sala, Sessão e Assentos
+- Site para compra de ingressos com Sala, Sessão e Assentos
 
 ## Integrantes
 - Alfredo Regner
