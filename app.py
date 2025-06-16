@@ -35,6 +35,7 @@ def inserir_filme():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Recebe o usuário e senha para fazer login e retorna informações do usuário
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -77,6 +78,7 @@ def listar_filmes():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# GET dos ingressos com informações de sessão, sala e assento
 @app.route('/ingressos/<int:cod_usuario>', methods=['GET'])
 def get_ingresso(cod_usuario):
     try:
@@ -120,6 +122,7 @@ def get_ingresso(cod_usuario):
         cursor.close()
         conn.close()
 
+# GET da sessão de cada filme
 @app.route('/filme/<int:id_tmdb>', methods=['GET'])
 def get_sessoes_by_tmdb(id_tmdb):
     try:
@@ -163,7 +166,7 @@ def get_sessoes_by_tmdb(id_tmdb):
         cursor.close()
         conn.close()
 
-
+#POST de cadastro de usuário
 @app.route('/cadastro', methods=['POST'])
 def cadastrar_usuario():
     data = request.get_json()
@@ -197,6 +200,7 @@ def cadastrar_usuario():
     except Exception as e:
         return jsonify({'erro': str(e)}), 500
 
+#GET das cadeiras de cada sessão
 @app.route('/sessao/<int:cod_sessao>/cadeiras', methods=['GET'])
 def get_cadeiras_sessao(cod_sessao):
     try:
@@ -229,6 +233,7 @@ def get_cadeiras_sessao(cod_sessao):
         cursor.close()
         conn.close()
 
+#GET da sessão específica do filme
 @app.route('/sessao/<int:cod_sessao>', methods=['GET'])
 def get_sessao(cod_sessao):
     try:
@@ -261,6 +266,7 @@ def get_sessao(cod_sessao):
         cursor.close()
         conn.close()
 
+#POST ao comprar ingressos
 @app.route('/sessao/<int:id>/comprar', methods=['POST'])
 def comprar_ingressos(id):
     cadeiras = request.json.get('cadeiras', [])
