@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './css/home.css'
 import CardFilme from '../components/CardFilme'
-import banner from '../images/banner.jfif'
+
 const filmesURL = import.meta.env.VITE_API_MOVIE;
 const apiKey = import.meta.env.VITE_API_KEY;
 
